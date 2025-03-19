@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  name          String?
+  image         String?
+  description   String?
+  password      String
+  roleId        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  subscriptions Subscription[]
+  role          UserRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  invoices      Invoice[]
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  icon      String
+  colorHex  String
+  name      String    @unique
+  invoices  Invoice[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  deleted   Boolean   @default(false)
+  deletedBy String?
+}
+
+model Invoice {
+  id         String   @id @default(uuid())
+  text       String
+  jsonData   Json
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  type       Type     @relation(fields: [typeId], references: [id])
+  typeId     String
+}
+
+model Type {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  invoices Invoice[]
+}
+
+model Plan {
+  id           String   @id @default(uuid())
+  name         String   @unique // Exemplo: "Free", "Premium", "Pro"
+  description  String
+  price        Float // valor mensal ou anual
+  currency     String   @default("AOA") // ou "AOA", "BRL", etc.
+  invoiceLimit Int // Limite de faturas que o usuário pode criar
+  features     Json // lista de features adicionais
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id     String @id @default(uuid())
+  userId String
+  planId String
+
+  // Relacionamentos
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  status        SubscriptionStatus @default(ACTIVE)
+  startDate     DateTime           @default(now())
+  endDate       DateTime? // fim da assinatura (se for temporário ou cancelado)
+  renewsAt      DateTime? // quando renova
+  canceledAt    DateTime?
+  paymentMethod String? // Stripe, PayPal, Pix, etc.
+  externalRef   String? // Stripe Subscription ID, PayPal ID...
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PENDING
+  CANCELED
+  EXPIRED
+}
