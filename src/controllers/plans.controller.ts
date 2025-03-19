@@ -94,6 +94,14 @@ export const getPlanById = async (req: Request, res: Response) => {
  */
 export const createPlan = async (req: Request, res: Response) => {
     const { name, description, price, currency = 'AOA', invoiceLimit, features } = req.body;
+    if (!name || !description || !price || !invoiceLimit || !features) {
+        res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+        return;
+    }
+    if (req.user?.role !== 'admin') {
+        res.status(403).json({ error: 'Ação não permitida.' });
+        return;
+    }
     try {
         const plan = await prisma.plan.create({
             data: {
@@ -137,6 +145,10 @@ export const createPlan = async (req: Request, res: Response) => {
  */
 export const updatePlan = async (req: Request, res: Response) => {
     const { id } = req.params;
+    if (req.user?.role !== 'admin') {
+        res.status(403).json({ error: 'Ação não permitida.' });
+        return;
+    }
     try {
         const plan = await prisma.plan.update({
             where: { id },
@@ -168,6 +180,10 @@ export const updatePlan = async (req: Request, res: Response) => {
  */
 export const deletePlan = async (req: Request, res: Response) => {
     const { id } = req.params;
+    if (req.user?.role !== 'admin') {
+        res.status(403).json({ error: 'Ação não permitida.' });
+        return;
+    }
     try {
         await prisma.plan.delete({ where: { id } });
         res.status(204).send();

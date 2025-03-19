@@ -90,6 +90,14 @@ export const getCategoryById = async (req: Request, res: Response) => {
  */
 export const createCategory = async (req: Request, res: Response) => {
     const { name, colorHex, icon } = req.body;
+    if (!name || !colorHex || !icon) {
+        res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+        return;
+    }
+    if (req.user!.role !== 'admin') {
+        res.status(403).json({ error: 'Você não tem permissão para criar uma categoria.' });
+        return;
+    }
     try {
         const category = await prisma.category.create({
             data: { name, colorHex, icon }
@@ -126,6 +134,10 @@ export const createCategory = async (req: Request, res: Response) => {
  */
 export const updateCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
+    if (req.user!.role !== 'admin') {
+        res.status(403).json({ error: 'Acesso não autorizado.' });
+        return
+    }
     try {
         const category = await prisma.category.update({
             where: { id },
@@ -157,6 +169,10 @@ export const updateCategory = async (req: Request, res: Response) => {
  */
 export const deleteCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
+    if (req.user!.role !== 'admin') {
+        res.status(403).json({ error: 'Acesso negado. Você não tem permissão para excluir categorias.' });
+        return
+    }
     try {
         await prisma.category.update({
             where: { id },
