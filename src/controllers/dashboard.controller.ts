@@ -15,6 +15,7 @@ const prisma = new PrismaClient();
  * /dashboard/summary:
  *   get:
  *     summary: Resumo financeiro do usuário
+ *     tags: [Dashboard]
  *     description: Retorna o total de receitas, despesas e o saldo do usuário.
  *     parameters:
  *       - in: path
@@ -75,6 +76,7 @@ export const getSummary = async (req: Request, res: Response) => {
  * /dashboard/expenses-by-category:
  *   get:
  *     summary: Gastos por categoria
+ *     tags: [Dashboard]
  *     description: Retorna os gastos do usuário agrupados por categoria
  *     parameters:
  *       - in: path
@@ -132,6 +134,7 @@ export const getExpensesByCategory = async (req: Request, res: Response) => {
  * /dashboard/monthly-history:
  *   get:
  *     summary: Histórico mensal
+ *     tags: [Dashboard]
  *     description: Retorna a evolução mensal de receitas e despesas
  *     parameters:
  *       - in: path
@@ -190,6 +193,7 @@ export const getMonthlyHistory = async (req: Request, res: Response) => {
  * /dashboard/recent-transactions:
  *   get:
  *     summary: Últimas transações
+ *     tags: [Dashboard]
  *     description: Retorna as 10 últimas transações do usuário
  *     parameters:
  *       - in: path

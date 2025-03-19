@@ -472,6 +472,9 @@
     "/dashboard/summary": {
       "get": {
         "summary": "Resumo financeiro do usuário",
+        "tags": [
+          "Dashboard"
+        ],
         "description": "Retorna o total de receitas, despesas e o saldo do usuário.",
         "parameters": [
           {
@@ -512,6 +515,9 @@
     "/dashboard/expenses-by-category": {
       "get": {
         "summary": "Gastos por categoria",
+        "tags": [
+          "Dashboard"
+        ],
         "description": "Retorna os gastos do usuário agrupados por categoria",
         "parameters": [
           {
@@ -555,6 +561,9 @@
     "/dashboard/monthly-history": {
       "get": {
         "summary": "Histórico mensal",
+        "tags": [
+          "Dashboard"
+        ],
         "description": "Retorna a evolução mensal de receitas e despesas",
         "parameters": [
           {
@@ -598,6 +607,9 @@
     "/dashboard/recent-transactions": {
       "get": {
         "summary": "Últimas transações",
+        "tags": [
+          "Dashboard"
+        ],
         "description": "Retorna as 10 últimas transações do usuário",
         "parameters": [
           {
@@ -1452,6 +1464,10 @@
     {
       "name": "Categories",
       "description": "Endpoints para gerenciamento de categorias"
+    },
+    {
+      "name": "Dashboard",
+      "description": "Endpoints para controle do dashboard"
     },
     {
       "name": "Plans",
