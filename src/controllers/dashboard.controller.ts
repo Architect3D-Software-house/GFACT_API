@@ -3,6 +3,12 @@ import { Request, Response } from "express";
 import { IJsonSchema } from "../dto";
 import { JsonValue } from "@prisma/client/runtime/library";
 const prisma = new PrismaClient();
+/**
+ * @swagger
+ * tags:
+ *   name: Dashboard
+ *   description: Endpoints para controle do dashboard
+ */
 
 /**
  * @swagger
