@@ -24,7 +24,7 @@ app.use(cors())
 // Ou configuração personalizada:
 app.use(cors({
   origin: '*', // Coloca o endereço do frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
