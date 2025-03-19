@@ -138,3 +138,71 @@ export const updateUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Erro ao atualizar usuário' })
   }
 }
+
+/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Retorna os dados do usuário autenticado
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Dados do usuário autenticado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 image:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       401:
+ *         description: Não autorizado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
+ */
+export const getLoggedUser = async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({ error: 'Não autorizado' })
+    return
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+    })
+
+    if (!user) {
+      res.status(404).json({ error: 'Usuário não encontrado' })
+      return
+    }
+
+    res.json(user)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Erro ao buscar o usuário' })
+  }
+}
+

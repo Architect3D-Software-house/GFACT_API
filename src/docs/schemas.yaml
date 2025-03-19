@@ -1,0 +1,177 @@
+components:
+  schemas:
+    UserRole:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        name:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        password:
+          type: string
+        roleId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        role:
+          $ref: '#/components/schemas/UserRole'
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        icon:
+          type: string
+        colorHex:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        deleted:
+          type: boolean
+        deletedBy:
+          type: string
+          nullable: true
+
+    Type:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        text:
+          type: string
+        jsonData:
+          type: object  # Pode especificar o schema do JSON se quiser
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        categoryId:
+          type: string
+        typeId:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        type:
+          $ref: '#/components/schemas/Type'
+
+    Plan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        currency:
+          type: string
+        invoiceLimit:
+          type: integer
+        features:
+          type: object  # JSON
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+        planId:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, PENDING, CANCELED, EXPIRED]
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        renewsAt:
+          type: string
+          format: date-time
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          nullable: true
+        paymentMethod:
+          type: string
+          nullable: true
+        externalRef:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+        
