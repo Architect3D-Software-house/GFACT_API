@@ -10,6 +10,7 @@ import PlansRouter from './routes/plans.routes';
 import CategoriesRouter from './routes/categories.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 import path from 'path';
+import cors from  'cors';
 
 dotenv.config();
 
@@ -18,6 +19,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors())
+
+// Ou configuração personalizada:
+app.use(cors({
+  origin: '*', // Coloca o endereço do frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
 
 // Middleware de autenticação
 
