@@ -18,7 +18,12 @@ const prisma = new PrismaClient
  *     tags: [Categories]
  *     responses:
  *       200:
- *         description: Lista de categorias retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Category'
  */
 export const getCategories = async (req: Request, res: Response) => {
     try {
@@ -43,9 +48,21 @@ export const getCategories = async (req: Request, res: Response) => {
  *           type: string
  *     responses:
  *       200:
- *         description: Categoria encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/Category'
  *       404:
  *         description: Categoria não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não encontrado
  */
 export const getCategoryById = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -86,7 +103,11 @@ export const getCategoryById = async (req: Request, res: Response) => {
  *                 type: string
  *     responses:
  *       201:
- *         description: Categoria criada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/Category'
  */
 export const createCategory = async (req: Request, res: Response) => {
     const { name, colorHex, icon } = req.body;
@@ -126,11 +147,20 @@ export const createCategory = async (req: Request, res: Response) => {
  *         application/json:
  *           schema:
  *             type: object
+ *             $ref: '#/components/schemas/Category'
  *     responses:
  *       200:
  *         description: Categoria atualizada com sucesso
  *       404:
  *         description: Categoria não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não encontrado
  */
 export const updateCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -166,6 +196,14 @@ export const updateCategory = async (req: Request, res: Response) => {
  *         description: Categoria excluída com sucesso
  *       404:
  *         description: Categoria não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não encontrado
  */
 export const deleteCategory = async (req: Request, res: Response) => {
     const { id } = req.params;

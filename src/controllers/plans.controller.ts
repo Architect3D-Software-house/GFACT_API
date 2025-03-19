@@ -17,6 +17,12 @@ const prisma = new PrismaClient
  *     responses:
  *       200:
  *         description: Lista de planos retornada com sucesso
+ *         content:
+ *            application/json:
+ *               schema:
+ *                  type: array
+ *                  items:
+ *                    $ref: '#/components/schemas/Plan'
  */
 export const getPlans = async (req: Request, res: Response) => {
     try {
@@ -42,8 +48,21 @@ export const getPlans = async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Plano encontrado
+ *         content:
+ *            application/json:
+ *               schema:
+ *                  type: object
+ *                  $ref: '#/components/schemas/Plan'
  *       404:
  *         description: Plano não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Plano não encontrado
  */
 export const getPlanById = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -91,6 +110,31 @@ export const getPlanById = async (req: Request, res: Response) => {
  *     responses:
  *       201:
  *         description: Plano criado com sucesso
+ *         content:
+ *            application/json:
+ *               schema:
+ *                  type: object
+ *                  $ref: '#/components/schemas/Plan'
+ *       403:
+ *          description: Acesso Negado
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
+ *       500:
+ *         description: Erro inesperado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
  */
 export const createPlan = async (req: Request, res: Response) => {
     const { name, description, price, currency = 'AOA', invoiceLimit, features } = req.body;
@@ -137,11 +181,45 @@ export const createPlan = async (req: Request, res: Response) => {
  *         application/json:
  *           schema:
  *             type: object
+ *             $ref: '#/components/schemas/Plan'
  *     responses:
  *       200:
  *         description: Plano atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               $ref: '#/components/schemas/Plan'
  *       404:
  *         description: Plano não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não encontrado
+ *       403:
+ *          description: Acesso Negado
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
+ *       500:
+ *         description: Erro inesperado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
  */
 export const updatePlan = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -177,6 +255,34 @@ export const updatePlan = async (req: Request, res: Response) => {
  *         description: Plano excluído com sucesso
  *       404:
  *         description: Plano não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não encontrado
+ *       403:
+ *          description: Acesso Negado
+ *          content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
+ *       500:
+ *         description: Erro inesperado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
  */
 export const deletePlan = async (req: Request, res: Response) => {
     const { id } = req.params;

@@ -52,13 +52,15 @@ const prisma = new PrismaClient()
  *           minLength: 6
  *           description: Senha do usuário
  *           example: senhaSegura123
- *     LoginResponse:
+ *     LoginResponse: 
  *       type: object
  *       properties:
  *         token:
  *           type: string
  *           description: JWT Token válido por 24 horas
  *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *         user:
+ *           $ref: '#/components/schemas/User'
  */
 
 /**

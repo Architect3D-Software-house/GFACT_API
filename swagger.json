@@ -83,6 +83,9 @@
             "type": "string",
             "description": "JWT Token válido por 24 horas",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -169,6 +172,358 @@
           "message": {
             "type": "string",
             "example": "Senha alterada com sucesso"
+          }
+        }
+      },
+      "JsonSchema": {
+        "type": "object",
+        "properties": {
+          "Identificacao do Emitente": {
+            "type": "object",
+            "properties": {
+              "Nome": {
+                "type": "string"
+              },
+              "Morada": {
+                "type": "string"
+              },
+              "NIF": {
+                "type": "string"
+              },
+              "Contacto": {
+                "type": "string"
+              }
+            }
+          },
+          "Identificacao do Cliente": {
+            "type": "object",
+            "properties": {
+              "Nome": {
+                "type": "string"
+              },
+              "NIF": {
+                "type": "string"
+              },
+              "Morada": {
+                "type": "string"
+              }
+            }
+          },
+          "Data e Hora da Factura": {
+            "type": "object",
+            "properties": {
+              "Data": {
+                "type": "string"
+              },
+              "Hora": {
+                "type": "string"
+              }
+            }
+          },
+          "Numero da Factura": {
+            "type": "object",
+            "properties": {
+              "Factura-recibo": {
+                "type": "string"
+              },
+              "Documentos referenciados": {
+                "type": "string"
+              }
+            }
+          },
+          "Valor Total": {
+            "type": "string",
+            "description": "Exemplo \"KZ 500,00\""
+          },
+          "IVA e Base Tributavel": {
+            "type": "object",
+            "properties": {
+              "Base tributavel": {
+                "type": "string"
+              },
+              "IVA (%)": {
+                "type": "string"
+              },
+              "Valor Total com IVA": {
+                "type": "string"
+              }
+            }
+          },
+          "Pagamento": {
+            "type": "object",
+            "properties": {
+              "Forma de pagamento": {
+                "type": "string"
+              },
+              "Valor": {
+                "type": "string"
+              }
+            }
+          },
+          "Outras Informacoes": {
+            "type": "object",
+            "properties": {
+              "Software": {
+                "type": "string"
+              },
+              "Emp.": {
+                "type": "string"
+              },
+              "Data de processamento": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "UserRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "colorHex": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Type": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "jsonData": {
+            "type": "object",
+            "$ref": "#/components/schemas/JsonSchema"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "typeId": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "type": {
+            "$ref": "#/components/schemas/Type"
+          }
+        }
+      },
+      "Plan": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "invoiceLimit": {
+            "type": "integer"
+          },
+          "features": {
+            "type": "object"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "planId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "PENDING",
+              "CANCELED",
+              "EXPIRED"
+            ]
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "renewsAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "canceledAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalRef": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
@@ -343,7 +698,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de categorias retornada com sucesso"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -380,7 +744,14 @@
         },
         "responses": {
           "201": {
-            "description": "Categoria criada com sucesso"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
           }
         }
       }
@@ -403,10 +774,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Categoria encontrada"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Categoria não encontrada"
+            "description": "Categoria não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -430,7 +821,8 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "type": "object",
+                "$ref": "#/components/schemas/Category"
               }
             }
           }
@@ -440,7 +832,20 @@
             "description": "Categoria atualizada com sucesso"
           },
           "404": {
-            "description": "Categoria não encontrada"
+            "description": "Categoria não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -464,7 +869,20 @@
             "description": "Categoria excluída com sucesso"
           },
           "404": {
-            "description": "Categoria não encontrada"
+            "description": "Categoria não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -476,17 +894,6 @@
           "Dashboard"
         ],
         "description": "Retorna o total de receitas, despesas e o saldo do usuário.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID do usuário"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Resumo financeiro retornado com sucesso",
@@ -519,17 +926,6 @@
           "Dashboard"
         ],
         "description": "Retorna os gastos do usuário agrupados por categoria",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID do usuário"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Lista de categorias com total de gastos",
@@ -565,17 +961,6 @@
           "Dashboard"
         ],
         "description": "Retorna a evolução mensal de receitas e despesas",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID do usuário"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Histórico mensal retornado com sucesso",
@@ -611,17 +996,6 @@
           "Dashboard"
         ],
         "description": "Retorna as 10 últimas transações do usuário",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID do usuário"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Lista das últimas transações",
@@ -686,16 +1060,63 @@
         },
         "responses": {
           "200": {
-            "description": "Fatura processada e salva com sucesso"
+            "description": "Fatura processada e salva com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/JsonSchema"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Nenhum arquivo enviado"
+            "description": "Nenhum arquivo enviado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Nenhum arquivo enviado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Usuário não autenticado"
+            "description": "Usuário não autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "403": {
-            "description": "Limite de faturas atingido"
+            "description": "Limite de faturas atingido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Limite de faturas atingido"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -784,10 +1205,33 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de faturas"
+            "description": "Lista de faturas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invoice"
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Usuário não autenticado"
+            "description": "Usuário não autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -815,13 +1259,47 @@
         ],
         "responses": {
           "200": {
-            "description": "Fatura encontrada"
+            "description": "Fatura encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Usuário não autenticado"
+            "description": "Usuário não autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Fatura não encontrada"
+            "description": "Fatura não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -850,10 +1328,36 @@
             "description": "Fatura excluída com sucesso"
           },
           "401": {
-            "description": "Usuário não autenticado"
+            "description": "Usuário não autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Fatura não encontrada"
+            "description": "Fatura não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Fatura não encontrada"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -949,7 +1453,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista completa de faturas"
+            "description": "Lista completa de faturas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Invoice"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -962,7 +1476,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de planos retornada com sucesso"
+            "description": "Lista de planos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Plan"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1007,7 +1531,47 @@
         },
         "responses": {
           "201": {
-            "description": "Plano criado com sucesso"
+            "description": "Plano criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Plan"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso Negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1030,10 +1594,31 @@
         ],
         "responses": {
           "200": {
-            "description": "Plano encontrado"
+            "description": "Plano encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Plan"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Plano não encontrado"
+            "description": "Plano não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Plano não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1057,17 +1642,71 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "type": "object",
+                "$ref": "#/components/schemas/Plan"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Plano atualizado com sucesso"
+            "description": "Plano atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Plan"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso Negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Plano não encontrado"
+            "description": "Plano não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1090,84 +1729,53 @@
           "204": {
             "description": "Plano excluído com sucesso"
           },
-          "404": {
-            "description": "Plano não encontrado"
-          }
-        }
-      }
-    },
-    "/subscriptions": {
-      "get": {
-        "summary": "Listar todas as subscrições",
-        "description": "Lista todas as subscrições. Apenas administradores têm acesso.",
-        "tags": [
-          "Subscriptions"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Lista de subscrições"
-          },
           "403": {
-            "description": "Acesso negado"
-          },
-          "500": {
-            "description": "Erro ao buscar subscrições"
-          }
-        }
-      },
-      "post": {
-        "summary": "Criar uma nova subscrição",
-        "description": "Cria uma nova subscrição para o usuário autenticado.",
-        "tags": [
-          "Subscriptions"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "planId": {
-                    "type": "string"
-                  },
-                  "paymentMethod": {
-                    "type": "string"
-                  },
-                  "externalRef": {
-                    "type": "string"
-                  },
-                  "endDate": {
-                    "type": "string",
-                    "format": "date-time"
+            "description": "Acesso Negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
                   }
                 }
               }
             }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Subscrição criada com sucesso"
-          },
-          "400": {
-            "description": "Já possui uma subscrição ativa"
           },
           "404": {
-            "description": "Plano não encontrado"
+            "description": "Plano não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro ao criar subscrição"
+            "description": "Erro inesperado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1197,16 +1805,63 @@
         ],
         "responses": {
           "200": {
-            "description": "Detalhes da subscrição"
+            "description": "Detalhes da subscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Acesso negado"
+            "description": "Acesso negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Subscrição não encontrada"
+            "description": "Subscrição não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Subscrição não encontrada"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro ao buscar subscrição"
+            "description": "Erro ao buscar subscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao buscar subscrição"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1263,16 +1918,63 @@
         },
         "responses": {
           "200": {
-            "description": "Subscrição atualizada com sucesso"
+            "description": "Subscrição atualizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Acesso negado"
+            "description": "Acesso negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Subscrição não encontrada"
+            "description": "Subscrição não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Subscrição não encontrada"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro ao atualizar subscrição"
+            "description": "Erro ao buscar subscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao buscar subscrição"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1303,13 +2005,152 @@
             "description": "Subscrição cancelada com sucesso"
           },
           "403": {
-            "description": "Acesso negado"
+            "description": "Acesso negado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Subscrição não encontrada"
+            "description": "Subscrição não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Subscrição não encontrada"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro ao cancelar subscrição"
+            "description": "Erro ao buscar subscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao buscar subscrição"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions": {
+      "post": {
+        "summary": "Criar uma nova subscrição",
+        "description": "Cria uma nova subscrição para o usuário autenticado.",
+        "tags": [
+          "Subscriptions"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "planId": {
+                    "type": "string"
+                  },
+                  "paymentMethod": {
+                    "type": "string"
+                  },
+                  "externalRef": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Subscrição criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Já possui uma subscrição ativa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Já possui uma subscrição"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plano não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao criar subscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro inesperado"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1376,32 +2217,7 @@
                       "example": "Usuário atualizado com sucesso"
                     },
                     "user": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      }
+                      "$ref": "#/components/schemas/User"
                     }
                   }
                 }

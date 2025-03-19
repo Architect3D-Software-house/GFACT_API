@@ -49,25 +49,8 @@ const prisma = new PrismaClient()
  *                 message:
  *                   type: string
  *                   example: Usuário atualizado com sucesso
- *                 user:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                     email:
- *                       type: string
- *                     name:
- *                       type: string
- *                     image:
- *                       type: string
- *                     description:
- *                       type: string
- *                     createdAt:
- *                       type: string
- *                       format: date-time
- *                     updatedAt:
- *                       type: string
- *                       format: date-time
+ *                 user: 
+ *                   $ref: '#/components/schemas/User'
  *       403:
  *         description: Acesso negado
  *         content:

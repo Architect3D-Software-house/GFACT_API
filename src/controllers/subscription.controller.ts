@@ -18,10 +18,33 @@ export class SubscriptionController {
      *     responses:
      *       200:
      *         description: Lista de subscrições
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Subscription'
      *       403:
      *         description: Acesso negado
+ *             content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       500:
      *         description: Erro ao buscar subscrições
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Erro ao buscar subscrições
+     *          
      */
     static async listSubscriptions(req: Request, res: Response) {
         if (req.user?.role !== 'admin') {
@@ -59,12 +82,41 @@ export class SubscriptionController {
      *     responses:
      *       200:
      *         description: Detalhes da subscrição
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: object
+ *                   $ref: '#/components/schemas/Subscription'
      *       403:
      *         description: Acesso negado
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       404:
      *         description: Subscrição não encontrada
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Subscrição não encontrada
      *       500:
      *         description: Erro ao buscar subscrição
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Erro ao buscar subscrição
      */
     static async getSubscriptionById(req: Request, res: Response) {
         const { id } = req.params;
@@ -125,12 +177,42 @@ export class SubscriptionController {
      *     responses:
      *       201:
      *         description: Subscrição criada com sucesso
+     *         content:
+ *               application/json:
+ *                schema:
+ *                 type: object
+ *                 $ref: '#/components/schemas/Subscription'
      *       400:
      *         description: Já possui uma subscrição ativa
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Já possui uma subscrição
      *       404:
      *         description: Plano não encontrado
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não encontrado
      *       500:
      *         description: Erro ao criar subscrição
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example:  Erro inesperado
+ * 
      */
     static async createSubscription(req: Request, res: Response) {
         const { planId, paymentMethod, externalRef, endDate } = req.body;
@@ -208,12 +290,41 @@ export class SubscriptionController {
      *     responses:
      *       200:
      *         description: Subscrição atualizada com sucesso
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: object
+ *                   $ref: '#/components/schemas/Subscription'
      *       403:
      *         description: Acesso negado
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       404:
      *         description: Subscrição não encontrada
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Subscrição não encontrada
      *       500:
-     *         description: Erro ao atualizar subscrição
+     *         description: Erro ao buscar subscrição
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Erro ao buscar subscrição
      */
     static async updateSubscription(req: Request, res: Response) {
         const { id } = req.params;
@@ -273,10 +384,34 @@ export class SubscriptionController {
      *         description: Subscrição cancelada com sucesso
      *       403:
      *         description: Acesso negado
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       404:
      *         description: Subscrição não encontrada
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Subscrição não encontrada
      *       500:
-     *         description: Erro ao cancelar subscrição
+     *         description: Erro ao buscar subscrição
+     *         content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Erro ao buscar subscrição
      */
     static async cancelSubscription(req: Request, res: Response) {
         const { id } = req.params;

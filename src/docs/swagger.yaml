@@ -1,5 +1,71 @@
 components:
   schemas:
+    JsonSchema:
+      type: object
+      properties:
+            Identificacao do Emitente:
+                  type: object
+                  properties:
+                        Nome:
+                              type: string
+                        Morada:
+                              type: string
+                        NIF:
+                              type: string
+                        Contacto:
+                              type: string
+            Identificacao do Cliente:
+                  type: object
+                  properties:
+                        Nome:
+                              type: string
+                        NIF:
+                              type: string
+                        Morada:
+                              type: string
+            Data e Hora da Factura:
+                  type: object
+                  properties:
+                        Data:
+                              type: string
+                        Hora:
+                              type: string
+            Numero da Factura:
+                  type: object
+                  properties:
+                        Factura-recibo:
+                              type: string
+                        Documentos referenciados:
+                              type: string
+            Valor Total:
+                  type: string
+                  description: Exemplo "KZ 500,00"
+            IVA e Base Tributavel:
+                  type: object
+                  properties:
+                        Base tributavel:
+                              type: string
+                        IVA (%):
+                              type: string
+                        Valor Total com IVA:
+                              type: string
+            Pagamento:
+                  type: object
+                  properties:
+                        Forma de pagamento:
+                              type: string
+                        Valor:
+                              type: string
+            Outras Informacoes:
+                  type: object
+                  properties:
+                        Software:
+                              type: string
+                        Emp.:
+                              type: string
+                        Data de processamento:
+                              type: string
+
     UserRole:
       type: object
       properties:
@@ -14,6 +80,12 @@ components:
         updatedAt:
           type: string
           format: date-time
+
+    ErrorMessage:
+      type: object
+      properties:
+        error:
+          type: string
 
     User:
       type: object
@@ -92,6 +164,7 @@ components:
           type: string
         jsonData:
           type: object  # Pode especificar o schema do JSON se quiser
+          $ref: '#/components/schemas/JsonSchema'
         userId:
           type: string
         createdAt:

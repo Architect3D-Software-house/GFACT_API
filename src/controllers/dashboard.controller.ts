@@ -17,13 +17,6 @@ const prisma = new PrismaClient();
  *     summary: Resumo financeiro do usuário
  *     tags: [Dashboard]
  *     description: Retorna o total de receitas, despesas e o saldo do usuário.
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
  *     responses:
  *       200:
  *         description: Resumo financeiro retornado com sucesso
@@ -78,13 +71,6 @@ export const getSummary = async (req: Request, res: Response) => {
  *     summary: Gastos por categoria
  *     tags: [Dashboard]
  *     description: Retorna os gastos do usuário agrupados por categoria
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
  *     responses:
  *       200:
  *         description: Lista de categorias com total de gastos
@@ -136,13 +122,6 @@ export const getExpensesByCategory = async (req: Request, res: Response) => {
  *     summary: Histórico mensal
  *     tags: [Dashboard]
  *     description: Retorna a evolução mensal de receitas e despesas
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
  *     responses:
  *       200:
  *         description: Histórico mensal retornado com sucesso
@@ -195,13 +174,6 @@ export const getMonthlyHistory = async (req: Request, res: Response) => {
  *     summary: Últimas transações
  *     tags: [Dashboard]
  *     description: Retorna as 10 últimas transações do usuário
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
  *     responses:
  *       200:
  *         description: Lista das últimas transações

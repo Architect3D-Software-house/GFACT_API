@@ -34,12 +34,41 @@ export class InvoiceController {
      *     responses:
      *       200:
      *         description: Fatura processada e salva com sucesso
+     *         content:
+     *           application/json:
+ *                 schema:
+ *                   type: object
+ *                   $ref: '#/components/schemas/JsonSchema'
      *       400:
      *         description: Nenhum arquivo enviado
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Nenhum arquivo enviado
      *       401:
      *         description: Usuário não autenticado
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       403:
      *         description: Limite de faturas atingido
+     *         content:
+ *               application/json:
+ *                  schema:
+ *                    type: object
+ *                    properties:
+ *                      error:
+ *                        type: string
+ *                        example: Limite de faturas atingido
      */
     static async processInvoice(req: Request, res: Response) {
         try {
@@ -159,8 +188,22 @@ export class InvoiceController {
      *     responses:
      *       200:
      *         description: Lista de faturas
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Invoice'
      *       401:
      *         description: Usuário não autenticado
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      */
     static async listInvoices(req: Request, res: Response) {
         if (!req.user) {
@@ -250,10 +293,31 @@ export class InvoiceController {
      *     responses:
      *       200:
      *         description: Fatura encontrada
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: object
+ *                   $ref: '#/components/schemas/Invoice'
      *       401:
      *         description: Usuário não autenticado
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       404:
      *         description: Fatura não encontrada
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não encontrado
      */
     static async getInvoiceById(req: Request, res: Response) {
         if (!req.user) {
@@ -329,6 +393,12 @@ export class InvoiceController {
      *     responses:
      *       200:
      *         description: Lista completa de faturas
+     *         content:
+ *               application/json:
+ *                 schema:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Invoice'
      */
     static async listAllInvoices(req: Request, res: Response) {
         try {
@@ -414,10 +484,27 @@ export class InvoiceController {
      *     responses:
      *       200:
      *         description: Fatura excluída com sucesso
+     *         
      *       401:
      *         description: Usuário não autenticado
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Não autorizado
      *       404:
      *         description: Fatura não encontrada
+     *         content:
+ *                 application/json:
+ *                   schema:
+ *                     type: object
+ *                     properties:
+ *                      error:
+ *                        type: string
+ *                        example: Fatura não encontrada
      */
     static async deleteInvoice(req: Request, res: Response) {
         if (!req.user) {

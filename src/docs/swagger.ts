@@ -31,7 +31,7 @@ const options: swaggerJSDoc.Options = {
       },
     ],
   },
-  apis: ['./src/controllers/*.ts'], // ⚠️ Garanta que as rotas públicas removam o security no controller
+  apis: ['./src/controllers/*.ts', './src/docs/swagger.yaml'], // ⚠️ Garanta que as rotas públicas removam o security no controller
 };
 
 const swaggerSpec = swaggerJSDoc(options);
