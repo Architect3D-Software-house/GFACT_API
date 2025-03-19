@@ -1,5 +1,6 @@
 import { Response, Request } from 'express'
 import { PrismaClient } from '@prisma/client'
+import { IJsonSchema } from '../dto'
 
 const prisma = new PrismaClient()
 
@@ -188,4 +189,121 @@ export const getLoggedUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Erro ao buscar o usuário' })
   }
 }
+/**
+ * @swagger
+ * /users/categories/amounts:
+ *   get:
+ *     summary: Lista as categorias com o total de gastos de um usuário específico, incluindo a data da última fatura e o último método de pagamento
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Lista de categorias com os totais do usuário
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     format: uuid
+ *                     description: ID da categoria
+ *                   name:
+ *                     type: string
+ *                     description: Nome da categoria
+ *                   colorHex:
+ *                     type: string
+ *                     description: Cor da categoria
+ *                   icon:
+ *                     type: string
+ *                     description: Ícone da categoria
+ *                   amount:
+ *                     type: number
+ *                     description: Total gasto na categoria pelo usuário
+ *                   lastInvoiceCreatedAt:
+ *                     type: string
+ *                     format: date-time
+ *                     nullable: true
+ *                     description: Data da última fatura da categoria
+ *                   lastPaymentMethod:
+ *                     type: string
+ *                     nullable: true
+ *                     description: Última forma de pagamento utilizada
+ *       500:
+ *         description: Erro ao buscar categorias do usuário
+ */
+export const getUserCategoriesWithAmounts = async (req: Request, res: Response) => {
+
+  try {
+    const categories = await prisma.category.findMany({
+      where: {
+        deleted: false,
+      },
+      select: {
+        id: true,
+        name: true,
+        colorHex: true,
+        icon: true,
+        invoices: {
+          where: {
+            userId: req.user!.id,
+          },
+          select: {
+            jsonData: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
+
+    const result = categories.map((category) => {
+      let amount = 0;
+      let lastInvoiceCreatedAt: Date | null = null;
+      let lastPaymentMethod = null;
+
+      category.invoices.forEach((invoice) => {
+        const jsonData = invoice.jsonData as IJsonSchema;
+
+        // Extrai o valor total e converte de "KZ 500,00" para número
+        const valorTotal = Number(
+          jsonData["Valor Total"].replace(/[^\d,]/g, '').replace(',', '.')
+        );
+        if (!isNaN(valorTotal)) amount += valorTotal;
+
+        // Pega a última data e forma de pagamento
+        if (!lastInvoiceCreatedAt || new Date(invoice.createdAt) > new Date(lastInvoiceCreatedAt)) {
+          lastInvoiceCreatedAt = invoice.createdAt;
+          lastPaymentMethod = jsonData.Pagamento['Forma de pagamento'] || null;
+        }
+      });
+
+      return {
+        id: category.id,
+        name: category.name,
+        colorHex: category.colorHex,
+        icon: category.icon,
+        amount,
+        lastInvoiceCreatedAt,
+        lastPaymentMethod,
+      };
+    });
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar categorias do usuário' });
+  }
+};
+
 

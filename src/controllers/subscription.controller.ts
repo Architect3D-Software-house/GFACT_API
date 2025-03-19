@@ -5,47 +5,47 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 export class SubscriptionController {
-    /**
-     * @swagger
-     * /subscriptions:
-     *   get:
-     *     summary: Listar todas as subscrições
-     *     description: Lista todas as subscrições. Apenas administradores têm acesso.
-     *     tags:
-     *       - Subscriptions
-     *     security:
-     *       - bearerAuth: []
-     *     responses:
-     *       200:
-     *         description: Lista de subscrições
-     *         content:
- *               application/json:
- *                 schema:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Subscription'
-     *       403:
-     *         description: Acesso negado
- *             content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    properties:
- *                      error:
- *                        type: string
- *                        example: Não autorizado
-     *       500:
-     *         description: Erro ao buscar subscrições
-     *         content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    properties:
- *                      error:
- *                        type: string
- *                        example: Erro ao buscar subscrições
-     *          
-     */
+/**
+ * @swagger
+ * /subscriptions:
+ *   get:
+ *     summary: Listar todas as subscrições
+ *     description: Lista todas as subscrições. Apenas administradores têm acesso.
+ *     tags:
+ *       - Subscriptions
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de subscrições
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Subscription'
+ *       403:
+ *         description: Acesso negado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Não autorizado
+ *       500:
+ *         description: Erro ao buscar subscrições
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Erro ao buscar subscrições
+ */
+
     static async listSubscriptions(req: Request, res: Response) {
         if (req.user?.role !== 'admin') {
             res.status(403).json({ error: 'Acesso negado' });
