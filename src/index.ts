@@ -8,6 +8,8 @@ import InvoiceRouter from './routes/invoice.route';
 import { setupSwagger } from './docs/swagger';
 import PlansRouter from './routes/plans.routes';
 import CategoriesRouter from './routes/categories.routes';
+import dashboardRoutes from './routes/dashboard.routes';
+import path from 'path';
 
 dotenv.config();
 
@@ -19,13 +21,16 @@ app.use(express.json());
 
 // Middleware de autenticação
 
-app.use("/api",AuthRouter)
-app.use("/api",UserRouter)
-app.use("/api",SubscriptionRouter)
-app.use("/api",InvoiceRouter)
-app.use("/api",PlansRouter)
-app.use("/api",CategoriesRouter)
-
+app.use("/api", AuthRouter)
+app.use("/api", UserRouter)
+app.use("/api", SubscriptionRouter)
+app.use("/api", InvoiceRouter)
+app.use("/api", PlansRouter)
+app.use("/api", CategoriesRouter)
+app.use("/api", dashboardRoutes)
+app.get('/swagger.json', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../swagger.json'));
+});
 // Expondo o JSON do OpenAPI em /api-docs-json
 // Setup do Swagger
 setupSwagger(app);

@@ -45,4 +45,4 @@ export const prompt = `Extrai as informações da factura acima, para um modelo 
     6.	IVA e Base Tributável: Inclua ‘Base tributável’, ‘IVA (%)’ e ‘Valor Total com IVA’.
     7.	Pagamento: Inclua ‘Forma de pagamento’ e ‘Valor’.
     8.	Outras Informações: Inclua ‘Software’, ‘Emp.’ e ‘Data de processamento’.
-retorne em formato json igual a esse: ${objectToReturn}.`;
+retorne em formato json igual a esse, na chave Pagamento, o Valor deve vir no formato number: ${objectToReturn}.`;
