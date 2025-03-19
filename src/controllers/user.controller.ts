@@ -198,13 +198,6 @@ export const getLoggedUser = async (req: Request, res: Response) => {
  *       - Users
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - name: userId
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
  *     responses:
  *       200:
  *         description: Lista de categorias com os totais do usuário
