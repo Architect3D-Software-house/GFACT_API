@@ -469,7 +469,7 @@
         }
       }
     },
-    "/dashboard/summary/{userId}": {
+    "/dashboard/summary": {
       "get": {
         "summary": "Resumo financeiro do usuário",
         "description": "Retorna o total de receitas, despesas e o saldo do usuário.",
@@ -509,7 +509,7 @@
         }
       }
     },
-    "/dashboard/expenses-by-category/{userId}": {
+    "/dashboard/expenses-by-category": {
       "get": {
         "summary": "Gastos por categoria",
         "description": "Retorna os gastos do usuário agrupados por categoria",
@@ -552,7 +552,7 @@
         }
       }
     },
-    "/dashboard/monthly-history/{userId}": {
+    "/dashboard/monthly-history": {
       "get": {
         "summary": "Histórico mensal",
         "description": "Retorna a evolução mensal de receitas e despesas",
@@ -595,7 +595,7 @@
         }
       }
     },
-    "/dashboard/recent-transactions/{userId}": {
+    "/dashboard/recent-transactions": {
       "get": {
         "summary": "Últimas transações",
         "description": "Retorna as 10 últimas transações do usuário",

@@ -5,31 +5,32 @@ import {
   getMonthlyHistory,
   getRecentTransactions,
 } from "../controllers/dashboard.controller";
+import { authenticate } from "../middlewares/auth";
 
 const dashboardRoutes = Router();
 
 /**
- * @route GET /dashboard/summary/:userId
- * @desc Retorna o resumo financeiro do usuário
+ * @route GET /dashboard/summary
+ * @desc Retorna o resumo financeiro do usuário autenticado
  */
-dashboardRoutes.get("/summary/:userId", getSummary);
+dashboardRoutes.get("/summary", authenticate, getSummary);
 
 /**
- * @route GET /dashboard/expenses-by-category/:userId
- * @desc Retorna os gastos do usuário por categoria
+ * @route GET /dashboard/expenses-by-category
+ * @desc Retorna os gastos do usuário por categoria/ autenticado
  */
-dashboardRoutes.get("/expenses-by-category/:userId", getExpensesByCategory);
+dashboardRoutes.get("/expenses-by-category", authenticate, getExpensesByCategory);
 
 /**
- * @route GET /dashboard/monthly-history/:userId
- * @desc Retorna o histórico mensal de receitas e despesas do usuário
+ * @route GET /dashboard/monthly-history
+ * @desc Retorna o histórico mensal de receitas e despesas do usuário autenticado
  */
-dashboardRoutes.get("/monthly-history/:userId", getMonthlyHistory);
+dashboardRoutes.get("/monthly-history", authenticate, getMonthlyHistory);
 
 /**
- * @route GET /dashboard/recent-transactions/:userId
- * @desc Retorna as 10 últimas transações do usuário
+ * @route GET /dashboard/recent-transactions
+ * @desc Retorna as 10 últimas transações do usuário autenticado
  */
-dashboardRoutes.get("/recent-transactions/:userId", getRecentTransactions);
+dashboardRoutes.get("/recent-transactions", authenticate, getRecentTransactions);
 
 export default dashboardRoutes;

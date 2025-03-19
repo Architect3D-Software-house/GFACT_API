@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 /**
  * @swagger
- * /dashboard/summary/{userId}:
+ * /dashboard/summary:
  *   get:
  *     summary: Resumo financeiro do usuário
  *     description: Retorna o total de receitas, despesas e o saldo do usuário.
@@ -33,10 +33,9 @@ const prisma = new PrismaClient();
  *                   type: number
  */
 export const getSummary = async (req: Request, res: Response) => {
-    const { userId } = req.params;
     try {
         const income = await prisma.invoice.findMany({
-            where: { userId, type: { name: 'Receita' } },
+            where: { userId: req.user!.id, type: { name: 'Receita' } },
             select: { jsonData: true }
         });
 
@@ -46,7 +45,7 @@ export const getSummary = async (req: Request, res: Response) => {
         }, 0);
 
         const expense = await prisma.invoice.findMany({
-            where: { userId, type: { name: 'Despesa' } },
+            where: { userId: req.user!.id, type: { name: 'Despesa' } },
             select: { jsonData: true }
         });
 
@@ -67,7 +66,7 @@ export const getSummary = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /dashboard/expenses-by-category/{userId}:
+ * /dashboard/expenses-by-category:
  *   get:
  *     summary: Gastos por categoria
  *     description: Retorna os gastos do usuário agrupados por categoria
@@ -96,13 +95,12 @@ export const getSummary = async (req: Request, res: Response) => {
  *                     type: number
  */
 export const getExpensesByCategory = async (req: Request, res: Response) => {
-    const { userId } = req.params;
     try {
         const categories = await prisma.category.findMany({
             where: { deleted: false },
             include: {
                 invoices: {
-                    where: { userId, type: { name: 'Despesa' } },
+                    where: { userId: req.user!.id, type: { name: 'Despesa' } },
                     select: { jsonData: true }
                 }
             }
@@ -125,7 +123,7 @@ export const getExpensesByCategory = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /dashboard/monthly-history/{userId}:
+ * /dashboard/monthly-history:
  *   get:
  *     summary: Histórico mensal
  *     description: Retorna a evolução mensal de receitas e despesas
@@ -154,10 +152,9 @@ export const getExpensesByCategory = async (req: Request, res: Response) => {
  *                     type: number
  */
 export const getMonthlyHistory = async (req: Request, res: Response) => {
-    const { userId } = req.params;
     try {
         const invoices = await prisma.invoice.findMany({
-            where: { userId },
+            where: { userId: req.user!.id },
             select: { jsonData: true, createdAt: true, type: true }
         });
 
@@ -184,7 +181,7 @@ export const getMonthlyHistory = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /dashboard/recent-transactions/{userId}:
+ * /dashboard/recent-transactions:
  *   get:
  *     summary: Últimas transações
  *     description: Retorna as 10 últimas transações do usuário
@@ -218,11 +215,10 @@ export const getMonthlyHistory = async (req: Request, res: Response) => {
  *                     format: date-time
  */
 export const getRecentTransactions = async (req: Request, res: Response) => {
-    const { userId } = req.params;
     const getSchema = (data: JsonValue) => data as IJsonSchema;
     try {
         const transactions = await prisma.invoice.findMany({
-            where: { userId },
+            where: { userId: req.user!.id },
             orderBy: { createdAt: 'desc' },
             take: 10,
             include: { category: true, type: true }
