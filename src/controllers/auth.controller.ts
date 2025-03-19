@@ -192,7 +192,7 @@ export const login = async (req: Request, res: Response) => {
             { expiresIn: '24h' }
         )
 
-        res.json({ token })
+        res.json({ token, user })
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Erro no login' })
