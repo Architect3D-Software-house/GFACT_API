@@ -13,24 +13,24 @@ const dashboardRoutes = Router();
  * @route GET /dashboard/summary
  * @desc Retorna o resumo financeiro do usuário autenticado
  */
-dashboardRoutes.get("/summary", authenticate, getSummary);
+dashboardRoutes.get("/dashboard/summary", authenticate, getSummary);
 
 /**
  * @route GET /dashboard/expenses-by-category
  * @desc Retorna os gastos do usuário por categoria/ autenticado
  */
-dashboardRoutes.get("/expenses-by-category", authenticate, getExpensesByCategory);
+dashboardRoutes.get("/dashboard/expenses-by-category", authenticate, getExpensesByCategory);
 
 /**
  * @route GET /dashboard/monthly-history
  * @desc Retorna o histórico mensal de receitas e despesas do usuário autenticado
  */
-dashboardRoutes.get("/monthly-history", authenticate, getMonthlyHistory);
+dashboardRoutes.get("/dashboard/monthly-history", authenticate, getMonthlyHistory);
 
 /**
  * @route GET /dashboard/recent-transactions
  * @desc Retorna as 10 últimas transações do usuário autenticado
  */
-dashboardRoutes.get("/recent-transactions", authenticate, getRecentTransactions);
+dashboardRoutes.get("/dashboard/recent-transactions", authenticate, getRecentTransactions);
 
 export default dashboardRoutes;
