@@ -71,6 +71,7 @@ export class InvoiceController {
  *                        example: Limite de faturas atingido
      */
     static async processInvoice(req: Request, res: Response) {
+        const { categoryId, typeId } = req.body
         try {
             if (!req.file) {
                 res.status(400).json({ error: 'Nenhum arquivo enviado' });
@@ -117,16 +118,26 @@ export class InvoiceController {
 
             const structuredData = JSON.parse(response.choices[0].message.content || '{}');
 
-            const [category] = await prisma.category.findMany();
-            const [type] = await prisma.type.findMany();
+            const category = await prisma.category.findUnique({ where: { id: categoryId } });
+            const type = await prisma.type.findUnique({ where: { id: typeId } });
+
+            if (!category) {
+                res.status(400).json({ error: "categoryId invalido" })
+                return
+            }
+
+            if (!type) {
+                res.status(400).json({ error: "typeId invalido" })
+                return
+            }
 
             const savedData = await prisma.invoice.create({
                 data: {
                     text: extractedText,
                     jsonData: structuredData,
                     userId: req.user.id,
-                    categoryId: category?.id || "null",
-                    typeId: type?.id || "null",
+                    categoryId: categoryId,
+                    typeId: typeId,
                 },
             });
 

@@ -181,23 +181,10 @@ export const getMonthlyHistory = async (req: Request, res: Response) => {
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   text:
- *                     type: string
- *                   amount:
- *                     type: string
- *                   category:
- *                     type: string
- *                   type:
- *                     type: string
- *                   date:
- *                     type: string
- *                     format: date-time
+ *               items: 
+ *                  $ref: '#/components/schemas/Invoice'
  */
 export const getRecentTransactions = async (req: Request, res: Response) => {
-    const getSchema = (data: JsonValue) => data as IJsonSchema;
     try {
         const transactions = await prisma.invoice.findMany({
             where: { userId: req.user!.id },
@@ -206,15 +193,7 @@ export const getRecentTransactions = async (req: Request, res: Response) => {
             include: { category: true, type: true }
         });
 
-        const result = transactions.map(tx => ({
-            text: tx.text,
-            amount: getSchema(tx.jsonData).Pagamento.Valor,
-            category: tx.category.name,
-            type: tx.type.name,
-            date: tx.createdAt
-        }));
-
-        res.json(result);
+        res.json(transactions);
     } catch (err: any) {
         res.status(500).json({ error: err.message });
     }
