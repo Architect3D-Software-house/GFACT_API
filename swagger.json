@@ -1004,25 +1004,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "text": {
-                        "type": "string"
-                      },
-                      "amount": {
-                        "type": "string"
-                      },
-                      "category": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "date": {
-                        "type": "string",
-                        "format": "date-time"
-                      }
-                    }
+                    "$ref": "#/components/schemas/Invoice"
                   }
                 }
               }
@@ -1052,6 +1034,14 @@
                   "file": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "categoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "typeId": {
+                    "type": "string",
+                    "format": "uuid"
                   }
                 }
               }

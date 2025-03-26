@@ -31,6 +31,12 @@ export class InvoiceController {
      *               file:
      *                 type: string
      *                 format: binary
+     *               categoryId:
+     *                 type: string
+     *                 format: uuid
+     *               typeId:
+     *                 type: string
+     *                 format: uuid
      *     responses:
      *       200:
      *         description: Fatura processada e salva com sucesso
