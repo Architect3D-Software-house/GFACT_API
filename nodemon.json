@@ -1,7 +1,6 @@
 {
-    "watch": ["src"],
-    "ext": "ts",
-    "ignore": ["swagger.json", "*.json"],
-    "exec": "ts-node src/index.ts"
-  }
-  
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["swagger.json", "*.json"],
+  "exec": "set NODE_OPTIONS=--max-old-space-size=4096 && ts-node src/index.ts"
+}
